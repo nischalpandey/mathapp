@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'Screens/contact.dart';
 import 'Screens/subscribe.dart';
 import 'Screens/login.dart';
+import 'Screens/register.dart';
 
 void main() {
   // ignore: prefer_const_constructors
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
         "/contact": (context) => Contact(),
         "/sub": (context) => Sub(),
         "/login": (context) => Login(),
+        "/reg": (context) => Reg(),
       },
     );
   }

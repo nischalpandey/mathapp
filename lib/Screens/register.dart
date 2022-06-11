@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class Login extends StatefulWidget {
+class Reg extends StatefulWidget {
   @override
-  _LoginState createState() => _LoginState();
+  _RegState createState() => _RegState();
 }
 
-class _LoginState extends State<Login> {
+class _RegState extends State<Reg> {
   String name = "";
   bool changeButton = false;
   bool show = false;
@@ -38,13 +38,17 @@ class _LoginState extends State<Login> {
                   "assets/img/login.png",
                   fit: BoxFit.cover,
                 ),
-                SizedBox(
-                  height: 20.0,
-                ),
                 Text(
-                  "Welcome Back!",
+                  "Welcome,",
                   style: TextStyle(
                     fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  " $name",
+                  style: TextStyle(
+                    fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -58,12 +62,12 @@ class _LoginState extends State<Login> {
                     children: [
                       TextFormField(
                         decoration: InputDecoration(
-                          hintText: "Enter username or email",
-                          labelText: "Username or email",
+                          hintText: "Enter Your Full Name ",
+                          labelText: "Full Name ",
                         ),
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return "Username cannot be empty";
+                            return " Name cannot be empty";
                           }
 
                           return null;
@@ -74,14 +78,45 @@ class _LoginState extends State<Login> {
                         },
                       ),
                       TextFormField(
-                        obscureText: !this.show,
+                        obscureText: show,
                         decoration: InputDecoration(
                           hintText: "Enter password",
                           labelText: "Password",
                           suffix: IconButton(
                               onPressed: () {
                                 setState(() {
-                                  show = true;
+                                  if (show == true) {
+                                    show = false;
+                                  } else {
+                                    show = true;
+                                  }
+                                });
+                              },
+                              icon: Icon(Icons.remove_red_eye)),
+                        ),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "Password cannot be empty";
+                          } else if (value.length < 6) {
+                            return "Password length should be atleast 6";
+                          }
+
+                          return null;
+                        },
+                      ),
+                      TextFormField(
+                        obscureText: show,
+                        decoration: InputDecoration(
+                          hintText: "Enter password",
+                          labelText: "Password",
+                          suffix: IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  if (show == true) {
+                                    show = false;
+                                  } else {
+                                    show = true;
+                                  }
                                 });
                               },
                               icon: Icon(Icons.remove_red_eye)),
