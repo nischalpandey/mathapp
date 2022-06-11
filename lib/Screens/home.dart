@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+
 import 'package:math/artical.dart';
 import 'package:http/http.dart' as http;
 
@@ -73,6 +74,11 @@ class _PostState extends State<Post> {
               // ignore: prefer_const_literals_to_create_immutables
               children: [
                 Text("Welcome to math app"),
+                ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, "/contact");
+                    },
+                    child: Text("Click"))
               ],
             )),
         body: articles.isEmpty

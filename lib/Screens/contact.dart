@@ -14,7 +14,14 @@ class _ContactState extends State<Contact> {
       child: Column(
         children: [
           Text("Contact"),
-          Center(child: Image.asset('assets/img/contact.png'))
+          Center(
+            child: Image.asset('assets/img/contact.png'),
+          ),
+          ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "/login");
+              },
+              child: Text("Ligin"))
         ],
       ),
     );
