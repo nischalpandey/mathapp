@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:math/widgets/appbar.dart';
 
+import 'package:math/widgets/drawer.dart';
 import 'package:math/artical.dart';
 import 'package:http/http.dart' as http;
 
@@ -65,52 +67,51 @@ class _PostState extends State<Post> {
       theme: ThemeData(primarySwatch: Colors.green),
       home: Scaffold(
         appBar: AppBar(
-          title: Text("Math App"),
+          title: Text("Mero Math"),
+          backgroundColor: Colors.white,
+          elevation: 0,
+          centerTitle: true,
+          iconTheme: IconThemeData(color: Colors.black),
+          titleTextStyle: TextStyle(
+              color: Colors.black, fontSize: 30, fontWeight: FontWeight.bold),
         ),
-        drawer: Drawer(
-            backgroundColor: Colors.green,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              // ignore: prefer_const_literals_to_create_immutables
-              children: [
-                Text("Welcome to math app"),
-                ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, "/contact");
-                    },
-                    child: Text("Click"))
-              ],
-            )),
-        body: articles.isEmpty
-            ? Center(
-                child: const CircularProgressIndicator(),
-              )
-            :
-            //Text("Hello")
+        drawerEdgeDragWidth: 30,
+        drawerEnableOpenDragGesture: true,
+        drawer: Mydrawer(),
+        body: Container(
+          color: Colors.blue,
+          child: articles.isEmpty
+              ? Center(
+                  child: const CircularProgressIndicator(),
+                )
+              :
+              //Text("Hello")
 
-            ListView.builder(
-                itemCount: articles.length,
-                padding: EdgeInsets.only(top: 16.0),
-                itemBuilder: (context, index) {
-                  final article = articles[index];
+              ListView.builder(
+                  itemCount: articles.length,
+                  padding: EdgeInsets.only(top: 16.0),
+                  itemBuilder: (context, index) {
+                    final article = articles[index];
 
-                  if (index.isOdd) {
-                    return Divider();
-                  }
+                    if (index.isOdd) {
+                      return Divider();
+                    }
 
-                  final id = index ~/ 2 + 1;
+                    final id = index ~/ 2 + 1;
 
-                  return ListTile(
-                    leading: CircleAvatar(child: Text("${id}")),
-                    title: Text(
-                      article.title,
-                      style: TextStyle(
-                          fontSize: 20.0, fontWeight: FontWeight.bold),
-                    ),
-                    onTap: () => Fluttertoast.showToast(msg: '${article.url}'),
-                  );
-                },
-              ),
+                    return ListTile(
+                      leading: CircleAvatar(child: Text("${id}")),
+                      title: Text(
+                        article.title,
+                        style: TextStyle(
+                            fontSize: 20.0, fontWeight: FontWeight.bold),
+                      ),
+                      onTap: () =>
+                          Fluttertoast.showToast(msg: '${article.url}'),
+                    );
+                  },
+                ),
+        ),
       ),
     );
   }

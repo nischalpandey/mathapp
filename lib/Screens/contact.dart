@@ -11,6 +11,7 @@ class _ContactState extends State<Contact> {
   @override
   Widget build(BuildContext context) {
     return Material(
+      color: Colors.white,
       child: Column(
         children: [
           Text("Contact"),

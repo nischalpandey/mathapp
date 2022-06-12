@@ -1,3 +1,5 @@
+import 'package:google_fonts/google_fonts.dart';
+
 import 'Screens/home.dart';
 import 'package:flutter/material.dart';
 import 'Screens/contact.dart';
@@ -18,9 +20,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: "Math App",
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(primarySwatch: Colors.green),
-      // ignore: prefer_const_constructors
-
+      theme: ThemeData(
+        primarySwatch: Colors.green,
+        fontFamily: GoogleFonts.lato().fontFamily,
+      ),
       routes: {
         "/": (context) => Post(),
         "/contact": (context) => Contact(),
