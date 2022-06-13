@@ -1,13 +1,17 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:math/widgets/appbar.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:math/Screens/contact.dart';
+import 'package:math/Screens/exc.dart';
+import 'package:math/utils/routes.dart';
 
 import 'package:math/widgets/drawer.dart';
-import 'package:math/artical.dart';
+import 'package:math/utils/artical.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:html/dom.dart' as dom;
-import 'package:fluttertoast/fluttertoast.dart';
+
+import 'package:flutter/services.dart';
 
 class Post extends StatefulWidget {
   const Post({Key? key}) : super(key: key);
@@ -63,10 +67,33 @@ class _PostState extends State<Post> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Math App",
+      color: Colors.white,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.green),
       home: Scaffold(
+        backgroundColor: Colors.white,
         appBar: AppBar(
+          systemOverlayStyle: SystemUiOverlayStyle(
+              // Navigation bar
+              statusBarColor: Colors.white,
+              statusBarIconBrightness: Brightness.dark
+              // Status bar
+              ),
+          actions: [
+            PopupMenuButton(
+              itemBuilder: (BuildContext context) {
+                return [
+                  PopupMenuItem(
+                    child: Text("About"),
+                    onTap: () {
+                      Navigator.pushNamed(context, MyRoutes.contact);
+                    },
+                  ),
+                  PopupMenuItem(child: Text("Lisences")),
+                ];
+              },
+            )
+          ],
           title: Text("Mero Math"),
           backgroundColor: Colors.white,
           elevation: 0,
@@ -78,18 +105,33 @@ class _PostState extends State<Post> {
         drawerEdgeDragWidth: 30,
         drawerEnableOpenDragGesture: true,
         drawer: Mydrawer(),
-        body: Container(
-          color: Colors.blue,
-          child: articles.isEmpty
-              ? Center(
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 19),
+              child: Text(
+                "Chapters:",
+                style: TextStyle(
+                  fontFamily: GoogleFonts.roboto().fontFamily,
+                  fontSize: 19,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+            if (articles.isEmpty)
+              Expanded(
+                child: Center(
                   child: const CircularProgressIndicator(),
-                )
-              :
+                ),
+              )
+            else
               //Text("Hello")
 
-              ListView.builder(
+              Expanded(
+                child: ListView.builder(
                   itemCount: articles.length,
-                  padding: EdgeInsets.only(top: 16.0),
+                  shrinkWrap: true,
                   itemBuilder: (context, index) {
                     final article = articles[index];
 
@@ -99,18 +141,27 @@ class _PostState extends State<Post> {
 
                     final id = index ~/ 2 + 1;
 
-                    return ListTile(
-                      leading: CircleAvatar(child: Text("${id}")),
-                      title: Text(
-                        article.title,
-                        style: TextStyle(
-                            fontSize: 20.0, fontWeight: FontWeight.bold),
-                      ),
-                      onTap: () =>
-                          Fluttertoast.showToast(msg: '${article.url}'),
+                    return Card(
+                      elevation: 0.3,
+                      child: ListTile(
+                          leading: CircleAvatar(child: Text("${id}")),
+                          title: Text(
+                            article.title,
+                            style: TextStyle(
+                                fontSize: 20.0, fontWeight: FontWeight.bold),
+                          ),
+                          onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Homedetails(
+                                        link: article.url,
+                                        chapter: article.title,
+                                      )))),
                     );
                   },
                 ),
+              ),
+          ],
         ),
       ),
     );
